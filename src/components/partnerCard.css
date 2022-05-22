@@ -1,0 +1,31 @@
+.partnerCard{
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.partnerCard img{
+    width: 100%;
+    opacity: 0.5;
+    filter: grayscale(100%);
+    transition: .3s;
+}
+
+.partnerCard img:hover{
+    opacity: 1;
+    filter: grayscale(0%);
+    cursor: pointer;
+}
+
+.swiper-slide{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-pagination{
+    bottom: 0 !important;
+}

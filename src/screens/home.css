@@ -1,0 +1,33 @@
+body{
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.home-card{
+    height: 380px;
+}
+
+p{
+    font-size: 14px;
+}
+
+.home-icon i{
+    font-size: 40px;
+    color: #ffffff;
+}
+
+
+.btn-home{
+    display: inline-block;
+    background-color: #ffffff4b;
+    padding: 5px 15px;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: .5s;
+}
+
+.btn-home:hover{
+    background-color: #ffffff;
+    color: #000000c5;
+    letter-spacing: 2px;
+}
