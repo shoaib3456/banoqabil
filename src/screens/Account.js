@@ -33,10 +33,14 @@ const Account = () => {
         }
 
         const getStudentEducation = () => {
-            axios.get(`${api.apiBaseUrl}/StudentEducation/GetAllByStudentIdWithRelationShip?id=${token}`)
+            axios.get(`${api.apiBaseUrl}/StudentEducation/GetAllByStudentIdWithRelationShip?id=${token}`, {
+                headers: {
+                    'Authorization': `bearer ${localStorage.getItem('token')}`
+                }
+            })
                 .then((res) => {
                     setStudentEdu(res.data);
-                    
+
                 })
                 .catch((err) => {
                     console.log(err);
@@ -79,7 +83,10 @@ const Account = () => {
     return (
         <>
             <AppNavbar />
-            <Container className="shadow rounded"> 
+            <Container className="shadow rounded">
+                <div>
+                    <Button variant="contained" className="my-4" onClick={() => navigate('/registration')} >Edit</Button>
+                </div>
                 <Row className="py-2 mx-auto">
                     <Col md={12}>
                         <h2 className='text-center text-primary my-3'>Student Details</h2>
@@ -128,37 +135,6 @@ const Account = () => {
                             <div>{student.avgMonthlyHouseHoldIncome}</div>
                         </div>
                         <hr />
-                    </Col>
-                    <Col md={12}>
-
-                        <Table striped bordered hover>
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Father Name</th>
-                                    <th>Date of birth</th>
-                                    <th>Present Address</th>
-                                    <th>CNIC</th>
-                                    <th>Father Occupation</th>
-                                    <th>Gender</th>
-                                    <th>Father Monthly Income</th>
-                                    <th>Average Household Income</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>{data.name}</td>
-                                    <td>{student.fatherName}</td>
-                                    <td>{student.dob}</td>
-                                    <td>{student.presentAddress}</td>
-                                    <td>{student.cnic}</td>
-                                    <td>{student.fatherOccupation}</td>
-                                    <td>{student.gender}</td>
-                                    <td>{student.fatherMonthlyIncome}</td>
-                                    <td>{student.avgMonthlyHouseHoldIncome}</td>
-                                </tr>
-                            </tbody>
-                        </Table>
                     </Col>
                 </Row>
                 <Row className="py-2">
@@ -247,9 +223,7 @@ const Account = () => {
                             </tbody>
                         </table>
                     </Col>
-                    <div>
-                        <Button variant="contained" className="my-4" onClick={() => navigate('/registration')} >Edit</Button>
-                    </div>
+
                 </Row>
             </Container>
             <Footer />

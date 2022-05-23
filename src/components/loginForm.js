@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 
 const LoginForm = () => {
     const disptach = useDispatch();
+    const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
         username: '',
@@ -25,6 +26,7 @@ const LoginForm = () => {
 
     //handle submit
     const handleSubmit = async (e) => {
+        setLoading(true);
         e.preventDefault();
         if (username === '' || password === '') {
             alert('Please fill all the fields');
@@ -33,9 +35,11 @@ const LoginForm = () => {
                 const body = { username, password };
                 await axios.post(`${api.apiBaseUrl}/Auth/login`, body).then((res) => {
                     console.log(res.data);
+                    if (res.data) {
+                    setLoading(false)
+                    }
                     disptach({ type: 'LOGIN' ,payload:res.data.role})
                     localStorage.setItem('token', res.data.token);
-                    // localStorage.setItem('user', res.data.user);
                     localStorage.setItem('userid', res.data.userid);
                     navigate('/registration',{ replace: true });
                 }).catch((err) => {
@@ -61,8 +65,8 @@ const LoginForm = () => {
                     Didn't have an account <Link to="/signup" className='text-decoration-none' >Signup Here</Link>
                 </Form.Text>
             </Form.Group>
-            <Button variant="primary" type="submit">
-                Login
+            <Button disabled={loading?true:false} variant="primary" type="submit">
+                {loading ? 'Loading...' : 'Login'}
             </Button>
         </Form>
     )

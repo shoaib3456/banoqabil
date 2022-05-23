@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
-import { Home, Signup, Login, Registration, Dashboard, Students, Area, AddArea, EditArea, Batch, AddBatch, EditBatch, City, AddCity, EditCity, Courses, EditCourse, AddCourse, Degree, AddDegree, EditDegree, DataCard, Account ,AdmitCard } from "./index"
+import { Home, Signup, Login, Registration, Dashboard, Students, Area, AddArea, EditArea, Batch, AddBatch, EditBatch, City, AddCity, EditCity, Courses, EditCourse, AddCourse, Degree, AddDegree, EditDegree, DataCard, Account, AdmitCard } from "./index"
 import { useSelector } from 'react-redux';
 
 
@@ -13,7 +13,7 @@ const AppRouter = () => {
     const { isLoggedIn, role } = authstate;
     useEffect(() => {
         console.log(isLoggedIn);
-        
+
     }, []);
 
 
@@ -21,14 +21,14 @@ const AppRouter = () => {
         <>
             <Router>
                 <Routes>
+                    <Route path="/" element={<Home />} />
                     {
                         <>
                             isLoggedIn  ?
                             <>
-                                <Route path="/" element={<Home />} />
-                                <Route path="/registration" element={<Registration />} />
-                                <Route path="/account" element={<Account />} />
-                                <Route path="/admitCard" element={<AdmitCard />} />
+                                <Route path="/registration" element={ isLoggedIn ?  <Registration /> : <Login /> } />
+                                <Route path="/account" element={ isLoggedIn ?  <Account /> : <Login />}  />
+                                <Route path="/admitCard" element={ isLoggedIn ?  <AdmitCard /> : <Login />}  />
                                 {
                                     role === "admin" ?
                                         <>
@@ -55,15 +55,17 @@ const AppRouter = () => {
 
                                         </>
                                         :
-                                        <Route path="/registration" element={<Navigate to={isLoggedIn ? "/registration" : "/login"} replace />} />
+                                        <>
+                                            <Route path="/registration" element={<Navigate to={isLoggedIn ? "/registration" : "/login"} replace />} />
+                                            <Route path="/account" element={<Navigate to={isLoggedIn ? "/account" : "/login"} replace />} />
+                                            <Route path="/admitCard" element={<Navigate to={isLoggedIn ? "/admitCard" : "/login"} replace />} />
+                                        </>
                                 }
 
                             </>
                             <>
-                                <Route path="/" element={<Home />} />
                                 <Route path="/login" element={<Login />} />
                                 <Route path="/signup" element={<Signup />} />
-                                <Route path="/admitCard" element={<AdmitCard />} />
                             </>
 
                         </>

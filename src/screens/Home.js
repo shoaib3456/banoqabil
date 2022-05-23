@@ -8,7 +8,6 @@ import DisplayCard from '../components/displayCard'
 import displayCardImg1 from '../assets/HomeOnlineDonateBanner.jpg'
 import displayCardImg2 from '../assets/display-card-2.jpg'
 import VideoSlider from '../components/videoSlider'
-import pcplogo from '../assets/pcp-logo.png'
 import PartnerSlider from '../components/partnerSlider'
 import Footer from '../components/footer'
 import "./home.css"

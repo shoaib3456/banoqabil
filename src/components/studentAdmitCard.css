@@ -1,6 +1,41 @@
+.admit-card-container{
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .admit-card{
-    width: 400px;
+    width: 400px !important;
     padding: 15px;
     border: 1px solid grey;
-    border-radius: 15px;
+    border-radius: 25px;
 }
+
+.admit-card .admit-card-header{
+    display: flex;
+    justify-content: center;
+}
+
+.admit-card .admit-card-body{
+    margin-top: 15px;
+}
+
+.admit-card .admit-card-header .card-img{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+} 
+
+
+.admit-card .admit-card-body div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admit-card-body div h5, .admit-card-body div p{
+    font-size: 1.2em;
+}
+
+
+

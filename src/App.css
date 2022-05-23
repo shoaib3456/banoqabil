@@ -83,3 +83,14 @@ transform: translateY(-24px);
 .bg-theme{
     background-color: #015AAB;
 }
+
+
+.theme-navbar{
+    background-color: #fff !important;
+}
+
+.active{
+    background-color: #015AAB;
+    border-radius: 50px;
+    color: #fff !important;
+}

@@ -6,6 +6,8 @@ import api from '../config';
 
 const SignupForm = () => {
 
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     name: '',
     username: '',
@@ -24,6 +26,7 @@ const SignupForm = () => {
   //signup axios signup request
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (name === '' || username === '' || password === '') {
       alert('Please fill all the fields');
     }
@@ -36,6 +39,9 @@ const SignupForm = () => {
           body: JSON.stringify(body),
         });
         const parseRes = await response.json();
+        if (parseRes.success) {
+          setLoading(false);
+        }
         console.log(parseRes);
         navigate('/login');
       } catch (err) {
@@ -66,8 +72,8 @@ const SignupForm = () => {
           Already have an account <Link to="/login" className='text-decoration-none' >Login Here</Link>
         </Form.Text>
       </Form.Group>
-      <Button variant="primary" type="submit">
-        Signup
+      <Button disabled={loading?true:false} variant="primary" type="submit">
+        {loading ? 'Loading...' : 'Signup'}
       </Button>
     </Form>
   )

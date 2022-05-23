@@ -28,6 +28,7 @@ const Registration = () => {
   const [studentEdu, setStudentEdu] = useState([]);
   const [studentExp, setStudentExp] = useState([]);
   const [studentInfo, setStudentInfo] = useState([]);
+  const [isPresent, setIsPresent] = useState(false);
 
   const [institutes, setInstitutes] = useState([]);
   const [cities, setcities] = useState([]);
@@ -84,6 +85,9 @@ const Registration = () => {
 
 
   useEffect(() => {
+
+    console.log(api.apiHeader);
+
     if (localStorage.getItem('token')) {
       GetByUserIdWithRelationShip();
       getDistrict();
@@ -110,18 +114,18 @@ const Registration = () => {
 
   const handleFile = async (e) => {
 
-      if (e.target.files[0].name.toUpperCase().indexOf('PNG') != -1 || e.target.files[0].name.toUpperCase().indexOf('JPG') != -1 || e.target.files[0].name.toUpperCase().indexOf('GIF') != -1 || e.target.files[0].name.toUpperCase().indexOf('JPEG') != -1) {
-        setphotoErr("")
-        let base64 = await convertBase64(e.target.files[0]);
-        base64 = base64.split(',')[1]
-        setphoto(base64)
-        let photoExt = e.target.files[0].type.split('/')[1]
-        setphotoExt(photoExt);
-        console.log(base64);
-      }
-      else {
-        setphotoErr("File not supported (supported format is jpg,png,gif and jpeg ) ")
-      }
+    if (e.target.files[0].name.toUpperCase().indexOf('PNG') != -1 || e.target.files[0].name.toUpperCase().indexOf('JPG') != -1 || e.target.files[0].name.toUpperCase().indexOf('GIF') != -1 || e.target.files[0].name.toUpperCase().indexOf('JPEG') != -1) {
+      setphotoErr("")
+      let base64 = await convertBase64(e.target.files[0]);
+      base64 = base64.split(',')[1]
+      setphoto(base64)
+      let photoExt = e.target.files[0].type.split('/')[1]
+      setphotoExt(photoExt);
+      console.log(base64);
+    }
+    else {
+      setphotoErr("File not supported (supported format is jpg,png,gif and jpeg ) ")
+    }
   }
 
 
@@ -142,10 +146,14 @@ const Registration = () => {
 
 
   const GetByUserIdWithRelationShip = () => {
-    axios.get(`${api.apiBaseUrl}/Student/GetByUserIdWithRelationShip?id=${localStorage.getItem('userid')}`)
+    axios.get(`${api.apiBaseUrl}/Student/GetByUserIdWithRelationShip?id=${localStorage.getItem('userid')}`, {
+      headers: {
+        'Authorization': `bearer ${localStorage.getItem('token')}`
+      }
+    })
       .then(res => {
         // setStudentInfo(res.data);
-        
+
         console.log(res.data.student.id);
         localStorage.setItem('studentid', res.data.student.id);
 
@@ -271,21 +279,21 @@ const Registration = () => {
 
 
   const validate = Yup.object({
-    CNIC: Yup.string()
-      .matches(/^[0-9]{5}-[0-9]{7}-[0-9]{1}$/, "Invalid CNIC example: 12345-1234567-1")
-      .required("CNIC is Required"),
-    gender: Yup.string().required("Select Gender"),
-    fatherName: Yup.string().required("Father Name is Required"),
-    monthlyIncome: Yup.string().required("monthly Income is Required"),
-    fatherOccupation: Yup.string().required("Father Occupation is Required"),
-    mobileNumber: Yup.string()
-      .required("This field is Required")
-      .matches(/^\d{11}$/, "Phone number is not valid"),
-    dob: Yup.date().required("Date Of Birth is Required"),
-    avgMonthlyHouseHoldIncome: Yup.string().required("Average monthly household income is Required"),
-    // district: Yup.string().required("District is Required"),
+    // CNIC: Yup.string()
+    //   .matches(/^[0-9]{5}-[0-9]{7}-[0-9]{1}$/, "Invalid CNIC example: 12345-1234567-1")
+    //   .required("CNIC is Required"),
+    // gender: Yup.string().required("Select Gender"),
+    // fatherName: Yup.string().required("Father Name is Required"),
+    // monthlyIncome: Yup.string().required("monthly Income is Required"),
+    // fatherOccupation: Yup.string().required("Father Occupation is Required"),
+    // mobileNumber: Yup.string()
+    //   .required("This field is Required")
+    //   .matches(/^\d{11}$/, "Phone number is not valid"),
+    // dob: Yup.date().required("Date Of Birth is Required"),
+    // avgMonthlyHouseHoldIncome: Yup.string().required("Average monthly household income is Required"),
+    // // district: Yup.string().required("District is Required"),
 
-    presentaddress: Yup.string().required("Address is Required"),
+    // presentaddress: Yup.string().required("Address is Required"),
 
   });
 
@@ -293,23 +301,23 @@ const Registration = () => {
     initialValues: {
       CNIC: "",
       gender: "",
-      fatherName: "",
-      monthlyIncome: "",
-      fatherOccupation: "",
+      // fatherName: "",
+      // monthlyIncome: "",
+      // fatherOccupation: "",
       mobileNumber: "",
-      dob: "",
-      avgMonthlyHouseHoldIncome: "",
-      district: 0,
-      presentaddress: "",
-      sportsPerson: "",
-      hafiz: "",
-      disablity: "",
-      dumb: "",
-      physicalDisablity: "",
-      blind: "",
-      deaf: "",
-      widow: "",
-      orphan: "",
+      // dob: "",
+      // avgMonthlyHouseHoldIncome: "",
+      // district: 0,
+      // presentaddress: "",
+      // sportsPerson: "",
+      // hafiz: "",
+      // disablity: "",
+      // dumb: "",
+      // physicalDisablity: "",
+      // blind: "",
+      // deaf: "",
+      // widow: "",
+      // orphan: "",
 
     },
     validationSchema: validate,
@@ -318,24 +326,24 @@ const Registration = () => {
       const data = {
         cnic: values.CNIC,
         gender: values.gender,
-        fatherName: values.fatherName,
-        fatherMonthlyIncome: values.monthlyIncome.toString(),
-        fatherOccupation: values.fatherOccupation,
+        // fatherName: values.fatherName,
+        // fatherMonthlyIncome: values.monthlyIncome.toString(),
+        // fatherOccupation: values.fatherOccupation,
         mobile: values.mobileNumber,
-        dob: values.dob,
-        avgMonthlyHouseHoldIncome: values.avgMonthlyHouseHoldIncome,
-        districtId: parseInt(values.district),
-        presentAddress: values.presentaddress,
-        sportsPerson: values.sportsPerson === "Yes" ? true : false,
-        hafizQuran: values.hafiz === "Yes" ? true : false,
-        disablity: values.disablity === "Yes" ? true : false,
-        dumb: values.dumb === "Yes" ? true : false,
-        physicalDisability: values.physicalDisablity === "yes" ? true : false,
-        blind: values.blind === "Yes" ? true : false,
-        deaf: values.deaf === "Yes" ? true : false,
-        widow: values.widow === "Yes" ? true : false,
-        orphan: values.orphan === "Yes" ? true : false,
-        userId: localStorage.getItem("userid"),
+        // dob: values.dob,
+        // avgMonthlyHouseHoldIncome: values.avgMonthlyHouseHoldIncome,
+        // districtId: parseInt(values.district),
+        // presentAddress: values.presentaddress,
+        // sportsPerson: values.sportsPerson === "Yes" ? true : false,
+        // hafizQuran: values.hafiz === "Yes" ? true : false,
+        // disablity: values.disablity === "Yes" ? true : false,
+        // dumb: values.dumb === "Yes" ? true : false,
+        // physicalDisability: values.physicalDisablity === "yes" ? true : false,
+        // blind: values.blind === "Yes" ? true : false,
+        // deaf: values.deaf === "Yes" ? true : false,
+        // widow: values.widow === "Yes" ? true : false,
+        // orphan: values.orphan === "Yes" ? true : false,
+        // userId: localStorage.getItem("userid"),
         enrollmentDate: new Date(),
       }
 
@@ -403,7 +411,7 @@ const Registration = () => {
     companyName: Yup.string().required("required"),
     designation: Yup.string().required("required"),
     workFrom: Yup.string().required("required"),
-    workTo: Yup.string().required("required"),
+    // workTo: Yup.string().required("required"),
     // isPresent: Yup.string().required("required"),
   })
 
@@ -423,10 +431,12 @@ const Registration = () => {
         companyName: values.companyName,
         designationId: values.designation,
         workFrom: values.workFrom,
-        workTo: values.isPresent === true ? "" : values.workTo,
+        workTo: values.isPresent === true ? "0" : values.workTo,
         isPresent: values.isPresent === true ? "Yes" : "No",
         studentId: parseInt(localStorage.getItem("studentid")),
       }
+
+      setIsPresent(values.isPresent);
 
       console.log(data);
       addExperience(data);
@@ -438,30 +448,34 @@ const Registration = () => {
 
   //course info
   const crsvalidate = Yup.object({
-    institute: Yup.string().required("required"),
-    city: Yup.string().required("required"),
-    course: Yup.string().required("required"),
+    // institute: Yup.string().required("required"),
+    // city: Yup.string().required("required"),
+    // course: Yup.string().required("required"),
   })
+
+
 
   const crsformik = useFormik({
     initialValues: {
-      institute: "",
-      city: "",
-      course: "",
+      // institute: "",
+      // city: "",
+      // course: "",
+      checked: [],
     },
     validationSchema: crsvalidate,
     onSubmit: (values, { resetForm }) => {
       setcrs([...crs, values]);
 
       const data = {
-        instituteId: parseInt(values.institute),
-        cityId: parseInt(values.city),
-        courseId: parseInt(values.course),
-        studentId: parseInt(localStorage.getItem("studentid")),
+        // instituteId: parseInt(values.institute),
+        // cityId: parseInt(values.city),
+        // courseId: parseInt(values.course),
+        // studentId: parseInt(localStorage.getItem("studentid")),
+        checked: values.checked,
       }
 
       console.log(data);
-      addStudentInfo(data);
+      // addStudentInfo(data);
 
       resetForm();
     }
@@ -476,11 +490,11 @@ const Registration = () => {
         console.log(res.data);
         localStorage.setItem("studentid", res.data.id);
         // Add Image 
-        axios.post(`${api.apiBaseUrl}/Student/AddImage `, {
-          id:res.data.id,
-          image : photo,
-          ext : photoExt
-        })
+        // axios.post(`${api.apiBaseUrl}/Student/AddImage `, {
+        //   id:res.data.id,
+        //   image : photo,
+        //   ext : photoExt
+        // })
 
       })
       .catch(err => {
@@ -610,7 +624,7 @@ const Registration = () => {
                                 Photo
                               </label>
                               <span className="err">
-                                  {photoErr}
+                                {photoErr}
                               </span>
                             </div>
 
@@ -1487,10 +1501,10 @@ const Registration = () => {
                             <thead className="thead ">
                               <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">Institute</th>
-                                <th scope="col">City</th>
+                                <th scope="col">Courses</th>
+                                {/* <th scope="col">City</th>
                                 <th scope="col">Course</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">Action</th> */}
                               </tr>
                             </thead>
                             <tbody>
@@ -1515,9 +1529,9 @@ const Registration = () => {
 
                               <tr>
                                 <th></th>
-                                <td>
-                                  {/* institutes select dropdown */}
-                                  <select
+                                {/* <td> */}
+                                {/* institutes select dropdown */}
+                                {/* <select
                                     name="institute"
                                     id="Massage"
                                     className="input-text"
@@ -1539,10 +1553,10 @@ const Registration = () => {
                                     {crsformik.touched.prefernces &&
                                       crsformik.errors.prefernces}
                                   </p>
-                                </td>
-                                <td>
-                                  {/* cities select dropdown */}
-                                  <select
+                                </td> */}
+                                {/* <td> */}
+                                {/* cities select dropdown */}
+                                {/* <select
                                     name="city"
                                     id="Massage"
                                     className="input-text"
@@ -1564,10 +1578,10 @@ const Registration = () => {
                                     {crsformik.touched.departname &&
                                       crsformik.errors.departname}
                                   </p>
-                                </td>
-                                <td>
-                                  {/* courses select dropdown */}
-                                  <select
+                                </td> */}
+                                {/* <td> */}
+                                {/* courses select dropdown */}
+                                {/* <select
                                     name="course"
                                     id="Massage"
                                     className="input-text"
@@ -1589,6 +1603,47 @@ const Registration = () => {
                                     {crsformik.touched.tradename &&
                                       crsformik.errors.tradename}
                                   </p>
+                                </td> */}
+                                <td>
+                                  {/* <label>
+                                  <input 
+                                  type="checkbox"
+                                  value={crsformik.values.checked.includes("asd")}
+                                  checked={crsformik.values.checked.includes("asd")}
+                                   onChange={() => {
+                                     if(crsformik.values.checked.includes("asd")){
+                                       crsformik.setFieldValue("checked", crsformik.values.checked.filter(e => e !== "asd"))
+                                     }else{
+                                       crsformik.setFieldValue("checked", crsformik.values.checked.concat("asd"))
+                                     }
+
+                                   }}
+                                  />
+                                  &nbsp;
+                                 education
+                                </label> */}
+                                  {
+                                    courses.map((e, i) => (
+                                      <label>
+                                        <input
+                                          type="checkbox"
+                                          value={crsformik.values.checked.includes(e.id)}
+                                          checked={crsformik.values.checked.includes(e.id)}
+                                          onChange={() => {
+                                            if (crsformik.values.checked.includes(e.id)) {
+                                              crsformik.setFieldValue("checked", crsformik.values.checked.filter(e => e !== e.id))
+                                            } else {
+                                              crsformik.setFieldValue("checked", crsformik.values.checked.concat(e.id))
+                                            }
+
+                                          }}
+                                        />
+                                        &nbsp;
+                                        {e.name}
+                                      </label>
+                                    ))
+                                  }
+
                                 </td>
                                 <td>
                                   <button className="btn btn-e" onClick={crsformik.handleSubmit}><i className='bx bx-plus'></i></button>
