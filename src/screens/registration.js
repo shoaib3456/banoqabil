@@ -13,10 +13,10 @@ import StepButton from '@mui/material/StepButton';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 import IconButton from '@mui/material/IconButton';
 
-const steps = ['Registration', 'Education', 'Experience', 'Course Information'];
+// const steps = ['Registration', 'Education', 'Experience', 'Course Information'];
+const steps = ['Registration', 'Education', 'Course Information'];
 
 const Registration = () => {
   const [edu, setEdu] = useState([]);
@@ -279,21 +279,21 @@ const Registration = () => {
 
 
   const validate = Yup.object({
-    // CNIC: Yup.string()
-    //   .matches(/^[0-9]{5}-[0-9]{7}-[0-9]{1}$/, "Invalid CNIC example: 12345-1234567-1")
-    //   .required("CNIC is Required"),
-    // gender: Yup.string().required("Select Gender"),
-    // fatherName: Yup.string().required("Father Name is Required"),
-    // monthlyIncome: Yup.string().required("monthly Income is Required"),
-    // fatherOccupation: Yup.string().required("Father Occupation is Required"),
-    // mobileNumber: Yup.string()
-    //   .required("This field is Required")
-    //   .matches(/^\d{11}$/, "Phone number is not valid"),
-    // dob: Yup.date().required("Date Of Birth is Required"),
-    // avgMonthlyHouseHoldIncome: Yup.string().required("Average monthly household income is Required"),
-    // // district: Yup.string().required("District is Required"),
+    CNIC: Yup.string()
+      .matches(/^[0-9]{5}-[0-9]{7}-[0-9]{1}$/, "Invalid CNIC example: 12345-1234567-1")
+      .required("CNIC is Required"),
+    gender: Yup.string().required("Select Gender"),
+    fatherName: Yup.string().required("Father Name is Required"),
+    monthlyIncome: Yup.string().required("monthly Income is Required"),
+    fatherOccupation: Yup.string().required("Father Occupation is Required"),
+    mobileNumber: Yup.string()
+      .required("This field is Required")
+      .matches(/^\d{11}$/, "Phone number is not valid"),
+    dob: Yup.date().required("Date Of Birth is Required"),
+    avgMonthlyHouseHoldIncome: Yup.string().required("Average monthly household income is Required"),
+    // district: Yup.string().required("District is Required"),
 
-    // presentaddress: Yup.string().required("Address is Required"),
+    presentaddress: Yup.string().required("Address is Required"),
 
   });
 
@@ -301,14 +301,14 @@ const Registration = () => {
     initialValues: {
       CNIC: "",
       gender: "",
-      // fatherName: "",
-      // monthlyIncome: "",
-      // fatherOccupation: "",
+      fatherName: "",
+      monthlyIncome: "",
+      fatherOccupation: "",
       mobileNumber: "",
-      // dob: "",
-      // avgMonthlyHouseHoldIncome: "",
-      // district: 0,
-      // presentaddress: "",
+      dob: "",
+      avgMonthlyHouseHoldIncome: "",
+      district: 0,
+      presentaddress: "",
       // sportsPerson: "",
       // hafiz: "",
       // disablity: "",
